@@ -62,6 +62,7 @@ public class Player implements GameObject{
 		else {
 			moving = false;
 		}
+		boundStop();
 		updateAnimationPosition();		
 		animate().startAnimation();
 
@@ -99,5 +100,19 @@ public class Player implements GameObject{
 		animationIdleL.setBound(x, y, width, height);
 		animationIdleR.setBound(x, y, width, height);
 	}
-
+	
+	private void boundStop() {
+		if(x<0) {
+			x = 0;
+		}
+		if(x>Handler.getWidth()) {
+			x = Handler.getWidth();
+		}
+		if(y<0) {
+			y = 0;
+		}
+		if(y>Handler.getHeight()) {
+			y = Handler.getHeight();
+		}
+	}
 }
