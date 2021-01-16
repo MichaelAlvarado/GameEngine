@@ -1,6 +1,7 @@
 package GameObject;
 
 import java.awt.Graphics;
+import java.awt.Rectangle;
 
 import GameSetUp.Handler;
 import Resources.Animation;
@@ -20,6 +21,7 @@ public class Player implements GameObject{
 	public Animation animationR, animationL, animationIdleL, animationIdleR;
 	private boolean facingLeft = false;
 	private boolean moving = false;
+	private Rectangle bound; 
 
 	public Player() {} //Default Constructor
 
@@ -28,13 +30,15 @@ public class Player implements GameObject{
 		this.y = y;
 		this.width = width;
 		this.height = height;
+		this.bound = new Rectangle(x,y,width, height);
 		this.animationR = new Animation(Images.CharacterSpriteRight,0.6);
 		this.animationL = new Animation(Images.CharacterSpriteLeft,0.6);
 		this.animationIdleL = new Animation(Images.CharacterSpriteIdleLeft,0.6);
 		this.animationIdleR = new Animation(Images.CharacterSpriteIdleRight,0.6);
 
 	}
-
+	public Rectangle getBound() {return bound;}
+	
 	@Override
 	public void tick() {
 		if(Handler.getKeyManager().up) {
@@ -47,7 +51,10 @@ public class Player implements GameObject{
 			this.y += speed;
 			animate().startAnimation();
 		}
-		else if(Handler.getKeyManager().left) {
+		else {
+			moving = false;
+		}
+		if(Handler.getKeyManager().left) {
 			facingLeft = true;
 			moving = true;
 			this.x -= speed;
@@ -62,6 +69,7 @@ public class Player implements GameObject{
 		else {
 			moving = false;
 		}
+		updateBound();
 		boundStop();
 		updateAnimationPosition();		
 		animate().startAnimation();
@@ -99,6 +107,10 @@ public class Player implements GameObject{
 		animationR.setBound(x, y, width, height);
 		animationIdleL.setBound(x, y, width, height);
 		animationIdleR.setBound(x, y, width, height);
+	}
+	
+	private void updateBound() {
+		this.bound.setBounds(x, y, width, height);;
 	}
 	
 	private void boundStop() {

@@ -2,6 +2,7 @@ package GameObject;
 
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
 import GameSetUp.Handler;
@@ -15,6 +16,7 @@ public class Camera implements GameObject{
 	private int focalWidth, focalHeight;
 	private Player player;
 	private BufferedImage background;
+	private boolean debugging = false;
 
 	public Camera(Scene scene, int width, int height, Player focusPoint, BufferedImage background) {
 		x = 0;
@@ -26,31 +28,43 @@ public class Camera implements GameObject{
 		this.player = focusPoint;
 		this.background = background;
 	}
-	
+
 	@Override
 	public void tick() {
 		UpdateCamera();
+		if(Handler.getKeyManager().keyJustPressed(KeyEvent.VK_T)) {
+			debugging = !debugging;
+		}
 	}
 
 	@Override
 	public void render(Graphics g) {
 		BufferedImage background = this.background.getSubimage(x, y, width, height);
 		g.drawImage(background,0,0,Handler.getWidth(),Handler.getHeight(),null);
-		
+
 		//Draw Focal Point
-//		Rectangle bound = new Rectangle(x+(focalWidth/2), y+(focalHeight/2), this.focalWidth, this.focalHeight);
-//		g.drawRect(bound.x, bound.y, focalWidth, focalHeight);
+		if(debugging) {
+			Rectangle bound = new Rectangle(x, y, this.focalWidth, this.focalHeight);
+			g.drawRect(bound.x, bound.y, focalWidth, focalHeight);
+		}
 	}
-	
+
 	private void UpdateCamera() {
-		Rectangle bound = new Rectangle(x+(focalWidth/2), y+(focalHeight/2), this.focalWidth, this.focalHeight);
-		if(!bound.contains(player.x, player.y)) {
+		if(player.x > this.x+focalWidth) {
+			this.x = player.x-focalWidth;
+		}
+		if(player.y > this.y+focalHeight) {
+			this.y = player.y-focalHeight;
+		}
+		if(player.x < this.x) {
 			this.x = player.x;
+		}
+		if(player.y < this.y) {
 			this.y = player.y;
 		}
 		boundStop();
 	}
-	
+
 	private void boundStop() {
 		if(x<0) {
 			x = 0;
