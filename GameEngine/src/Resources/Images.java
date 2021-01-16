@@ -18,6 +18,8 @@ public class Images {
 	public static BufferedImage[] CharacterSpriteLeft;
 	public static BufferedImage[] CharacterSpriteIdleRight;
 	public static BufferedImage[] CharacterSpriteIdleLeft;
+	
+	public static BufferedImage Background;
 
 
 	public Images() {
@@ -70,6 +72,7 @@ public class Images {
 			CharacterSpriteLeft[7] =  ImageIO.read(new File("res/animation_Images/boy/WalkLeft (8).png"));
 			CharacterSpriteLeft[8] =  ImageIO.read(new File("res/animation_Images/boy/WalkLeft (9).png"));
 
+			Background = ImageIO.read(new File("res/background/Engine.png"));
 		}catch (IOException e) {
 			e.printStackTrace();
 		}

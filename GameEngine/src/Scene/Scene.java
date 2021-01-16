@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 
+import GameObject.Camera;
 import GameObject.Player;
 import GameSetUp.Handler;
 import Resources.Animation;
@@ -20,11 +21,14 @@ import Resources.Images;
 public class Scene {
 
 	Player player;	
+	Camera camera;
 	/**
 	 * Always called at first frame
 	 */
 	public Scene() {
 		player = new Player(0,0,40,45);
+		camera = new Camera(this, 200, 200, player, Images.Background);
+		
 	}
 
 	/**
@@ -32,6 +36,7 @@ public class Scene {
 	 */
 	public void tick() {
 		player.tick();
+		camera.tick();
 	}
 
 	/**
@@ -39,6 +44,9 @@ public class Scene {
 	 * @param g - Graphics g to print on game engine canvas
 	 */
 	public void render(Graphics g) {
+		camera.render(g);
+		//Background
+		//g.drawImage(Images.Background,0,0,Handler.getWidth(),Handler.getHeight(),null);
 		player.render(g);
 		//Draw the text
 		g.setColor(Color.BLACK);
