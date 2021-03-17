@@ -5,6 +5,8 @@ import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 
 import GUI.Display;
+import Scene.Scene;
+import Scene.TestScene;
 
 
 
@@ -40,7 +42,17 @@ public class GameEngine implements Runnable {
 		canvas.setBounds(0, 0, display.getContentPane().getWidth(), display.getContentPane().getHeight());
 		canvas.setFocusable(true);
 		display.getContentPane().add(canvas);
-		new Handler(display, canvas);
+		new Handler(display, canvas, new TestScene());
+	}
+	
+	public GameEngine(Display display, Scene scene) {
+		this.display = display;
+		threadB = false;
+		canvas = new Canvas();
+		canvas.setBounds(0, 0, display.getContentPane().getWidth(), display.getContentPane().getHeight());
+		canvas.setFocusable(true);
+		display.getContentPane().add(canvas);
+		new Handler(display, canvas, scene);
 	}
 
 	public static int getFPS() {

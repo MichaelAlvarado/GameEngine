@@ -29,7 +29,7 @@ public class Display extends JFrame{
 		try {
 			getContentPane().getGraphics().drawImage(ImageIO.read(new File("res/background/Engine.png")), 0, 0, getContentPane().getWidth(), getContentPane().getHeight(),null);//loading screen 
 		} catch (IOException e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 		}
 	}
 }

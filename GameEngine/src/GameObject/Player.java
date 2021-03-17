@@ -14,7 +14,7 @@ import Resources.Images;
  * Sample player
  *
  */
-public class Player implements GameObject{
+public class Player extends GameObject{
 
 	public int x=0, y=0, width=10, height=10; //Position
 	public int speed = 2;
@@ -23,13 +23,8 @@ public class Player implements GameObject{
 	private boolean moving = false;
 	private Rectangle bound; 
 
-	public Player() {} //Default Constructor
-
 	public Player(int x, int y, int width, int height) {
-		this.x = x;
-		this.y = y;
-		this.width = width;
-		this.height = height;
+		super(x,y,width,height);
 		this.bound = new Rectangle(x,y,width, height);
 		this.animationR = new Animation(Images.CharacterSpriteRight,0.6);
 		this.animationL = new Animation(Images.CharacterSpriteLeft,0.6);

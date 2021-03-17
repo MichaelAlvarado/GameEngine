@@ -1,9 +1,11 @@
 package Resources;
 
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.geom.Point2D;
 
 /**
  * Description - This class has the mouse movement and methods for the use of the Game
@@ -82,4 +84,9 @@ public class MouseManager implements MouseListener, MouseMotionListener{
 	public boolean pressedOn(Rectangle rec) {
 		return pressed && rec.contains(x,y);
 	}
+	
+	public Point getMousePosition() {
+		return new Point(x,y);
+	}
+	
 }

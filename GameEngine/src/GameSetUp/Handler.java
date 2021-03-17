@@ -1,15 +1,6 @@
 package GameSetUp;
 
 import java.awt.Canvas;
-import java.awt.Rectangle;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
-
-import javax.swing.JFrame;
-
 import GUI.Display;
 import Resources.Images;
 import Resources.KeyManager;
@@ -37,7 +28,7 @@ public class Handler {
 	private static SoundManager soundManager;
 	
 
-	public Handler(Display display, Canvas canvas) {
+	public Handler(Display display, Canvas canvas, Scene scene) {
 		Handler.display = display;
 		Handler.canvas = canvas;
 		keyManager = new KeyManager();
@@ -49,7 +40,7 @@ public class Handler {
 		canvas.addMouseMotionListener(mouseManager);
 		canvas.addMouseListener(mouseManager);
 		new Images(); //initialize the images
-		scene = new Scene();
+		Handler.scene = scene;
 	}
 
 	public static void tick() {
@@ -79,6 +70,10 @@ public class Handler {
 	
 	public static Scene getCurrentScene() {
 		return scene;
+	}
+	
+	public static void setCurrentScene(Scene newScene) {
+		scene = newScene;
 	}
 
 }

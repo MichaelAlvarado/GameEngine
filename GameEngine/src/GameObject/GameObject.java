@@ -2,9 +2,22 @@ package GameObject;
 
 import java.awt.Graphics;
 
-public interface GameObject {
+public abstract class GameObject {
 	
-	public void tick();
-	public void render(Graphics g);
+	public int x, y, width, height;
+
+	public GameObject(int x, int y, int width, int height) {
+		this.x = x;
+		this.y = y;
+		this.width = width;
+		this.height = height;
+	}
+	
+	public abstract void tick();
+	public abstract void render(Graphics g);
+	
+	public void render(Graphics g, int x, int y) {
+		
+	}
 	
 }

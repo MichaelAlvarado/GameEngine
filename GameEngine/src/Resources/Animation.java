@@ -44,10 +44,10 @@ public class Animation {
 	public Animation(BufferedImage[] images, double time) {
 		this.time = time;
 		this.animation = images;
-		if(images != null)
+		if(images != null && animation.length > 0)
 			timePerImage = time/animation.length;
 	}
-
+	
 	public BufferedImage[] getAnimation() {
 		return animation;
 	}
@@ -74,6 +74,17 @@ public class Animation {
 		if(isAnimating()) {
 			g.drawImage(getCurrentFrame(), x, y, width, height, null);
 		}
+	}
+	
+	/**
+	 * 
+	 * Description - paint of Canvas the Animation sprite only if animation started
+	 * Precondition - the animation must be provided with x, y, width, height;
+	 * @author - Michael J. Alvarado
+	 * @date Apr 9, 2020
+	 */
+	public void renderWithIdle(Graphics g) {
+		g.drawImage(getCurrentFrame(), x, y, width, height, null);
 	}
 
 	/**
