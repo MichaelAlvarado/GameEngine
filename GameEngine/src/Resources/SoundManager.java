@@ -9,18 +9,14 @@ import java.util.LinkedList;
 public class SoundManager {
 
 	//Audio
-	private File audioFile;
-	private AudioInputStream audioStream;
-	private AudioFormat format;
-	private DataLine.Info info;
-	private HashMap<String,Clip> audioChannels;
-	private boolean soundOn = true;
+	private static File audioFile;
+	private static AudioInputStream audioStream;
+	private static AudioFormat format;
+	private static DataLine.Info info;
+	private static HashMap<String,Clip> audioChannels = new HashMap<String,Clip>();;
+	private static boolean soundOn = true;
 
-	public SoundManager(){
-		audioChannels = new HashMap<String,Clip>();
-	}
-
-	private Clip loadAudio(String url) {
+	private static Clip loadAudio(String url) {
 		try {
 			//Read Audio File
 			audioFile = new File("res/music/" + url + ".wav");
@@ -49,7 +45,7 @@ public class SoundManager {
 	 * @date Apr 9, 2020
 	 * @param str - This is the name of the Audiofile (It must be in res/music/). This file must be .wav and dont give + ".wav" just give the name.
 	 */
-	public void play(String str) {
+	public static void play(String str) {
 		Clip clip = loadAudio(str);
 		clip.start();
 	}
@@ -60,7 +56,7 @@ public class SoundManager {
 	 * @date Apr 10, 2020
 	 * @param str - name of the .wav file in res/music/
 	 */
-	public void addAudio(String str) {
+	public static void addAudio(String str) {
 		audioChannels.put(str, loadAudio(str));
 		stopAudio(str);
 	}
@@ -72,8 +68,8 @@ public class SoundManager {
 	 * @date Apr 10, 2020
 	 * @param str - name of the .wav file in res/music/. (Has to be added by using addAudio)
 	 */
-	public void resumeAudio(String clip) {
-		if(soundOn == true) {
+	public static void resumeAudio(String clip) {
+		if(soundOn) {
 		Clip audioClip = audioChannels.get(clip);
 		if(audioClip.getMicrosecondPosition() == audioClip.getMicrosecondLength()) {
 			startAudio(clip);
@@ -89,8 +85,8 @@ public class SoundManager {
 	 * @date Apr 10, 2020
 	 * @param str - name of the .wav file in res/music/. (Has to be added by using addAudio)
 	 */
-	public void startAudio(String clip) {
-		if(soundOn == true) {
+	public static void startAudio(String clip) {
+		if(soundOn) {
 		Clip audioClip = audioChannels.get(clip);
 		audioClip.setMicrosecondPosition(0);
 		audioClip.start();
@@ -104,7 +100,7 @@ public class SoundManager {
 	 * @date Apr 10, 2020
 	 * @param str - name of the .wav file in res/music/. (Has to be added by using addAudio)
 	 */
-	public void stopAudio(String clip) {
+	public static void stopAudio(String clip) {
 		audioChannels.get(clip).stop();
 	}
 
@@ -115,7 +111,7 @@ public class SoundManager {
 	 * @date Apr 10, 2020
 	 * @param str - name of the .wav file in res/music/. (Has to be added by using addAudio) 
 	 */
-	public Clip getAudioClip(String clip) {
+	public static Clip getAudioClip(String clip) {
 		return audioChannels.get(clip);
 	}
 
@@ -127,13 +123,13 @@ public class SoundManager {
 	 * @param clip - Clip to set the volumen to
 	 * @param volumen - 0 is no sound to 46.0 which is high volumen
 	 */
-	public void setVolumen(Clip clip, float volumen) {
+	public static void setVolumen(Clip clip, float volumen) {
 		FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
 		gainControl.setValue(volumen-40);
 	}
 	
 	
-	public boolean soundToggle() {
+	public static boolean soundToggle() {
 		if(soundOn == true) {
 			return soundOn = false;
 		} else
